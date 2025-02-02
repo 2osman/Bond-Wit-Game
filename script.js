@@ -8,6 +8,7 @@ const questions = [
 
 // Initializing the game variables
 let currentQuestionIndex = 0;
+let score = 0; // Initialize score
 
 // Function to display the current question
 function displayQuestion() {
@@ -20,22 +21,21 @@ function submitAnswer() {
     const userAnswer = document.getElementById('user-answer').value;
     const scoreElement = document.getElementById('score');
 
-    // For simplicity, assuming a fixed score logic (this can be refined)
-    let score = 0;
-
-    // Example simple scoring logic: if the answer includes key "Bond" word, score is 10.
+    // Example simple scoring logic: if the answer includes the word "Bond", score 10
     if (userAnswer.toLowerCase().includes("bond")) {
-        score = 10;
+        score += 10; // Increase score by 10 if "Bond" is in the answer
     }
 
-    // Update score
+    // Update the score on the page
     scoreElement.textContent = score;
+
+    // Clear the previous answer
+    document.getElementById('user-answer').value = '';
 
     // Move to next question (if available)
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        displayQuestion();
-        document.getElementById('user-answer').value = ''; // Clear previous answer
+        displayQuestion(); // Show the next question
     } else {
         alert("Game Over! You completed all questions.");
     }
@@ -44,5 +44,7 @@ function submitAnswer() {
 // Set up event listeners
 document.getElementById('submit-answer').addEventListener('click', submitAnswer);
 
-// Initialize the game by displaying the first question
-displayQuestion();
+// Initialize the game by displaying the first question when the page loads
+window.onload = function() {
+    displayQuestion();
+};

@@ -1,47 +1,48 @@
-// List of possible sentences (Bond quotes)
-const sentences = [
-    "I'm the money.",
-    "Your boss must have some influence. I’ve never seen so much go out the door so quickly.",
-    "I’m not sure I could survive your best.",
-    "Do you believe in love at first sight, or should I walk by again?",
-    "You noticed.",
-    "I tend to notice little things like that - whether a girl is a blonde or a brunette.",
-    "I think Christmas only comes once a year."
+// Array of questions based on Bond's witty responses
+const questions = [
+    "Vesper: I'm the money. How will you respond?",
+    "Bond: Only if one assumes that the person with the best hand always wins. How do you respond?",
+    "Bond: I tend to notice little things like that—whether a girl is a blonde or a brunette. What do you say?",
+    "Bond: Skewered. One sympathizes. What's your comeback?"
 ];
 
-// Function to generate a random sentence
-function generateSentence() {
-    const randomIndex = Math.floor(Math.random() * sentences.length);
-    document.getElementById("sentence").textContent = sentences[randomIndex];
-    document.getElementById("user-response").value = '';
-    document.getElementById("score-container").style.display = "none";
+// Initializing the game variables
+let currentQuestionIndex = 0;
+
+// Function to display the current question
+function displayQuestion() {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.textContent = questions[currentQuestionIndex];
 }
 
-// Function to evaluate the user's response (simple scoring logic)
-function submitResponse() {
-    const userResponse = document.getElementById("user-response").value.trim();
-    if (userResponse === "") {
-        alert("Please enter a response!");
-        return;
-    }
+// Function to handle submitting the answer and scoring it
+function submitAnswer() {
+    const userAnswer = document.getElementById('user-answer').value;
+    const scoreElement = document.getElementById('score');
 
+    // For simplicity, assuming a fixed score logic (this can be refined)
     let score = 0;
 
-    // Simple evaluation logic (can be expanded or changed)
-    if (userResponse.includes("I noticed") || userResponse.includes("Of course")) {
+    // Example simple scoring logic: if the answer includes key "Bond" word, score is 10.
+    if (userAnswer.toLowerCase().includes("bond")) {
         score = 10;
-    } else if (userResponse.length > 50) {
-        score = 7;
-    } else if (userResponse.length > 20) {
-        score = 5;
-    } else {
-        score = 3;
     }
 
-    document.getElementById("score").textContent = score;
-    document.getElementById("score-container").style.display = "block";
+    // Update score
+    scoreElement.textContent = score;
+
+    // Move to next question (if available)
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        displayQuestion();
+        document.getElementById('user-answer').value = ''; // Clear previous answer
+    } else {
+        alert("Game Over! You completed all questions.");
+    }
 }
 
-window.onload = function() {
-    generateSentence();
-}
+// Set up event listeners
+document.getElementById('submit-answer').addEventListener('click', submitAnswer);
+
+// Initialize the game by displaying the first question
+displayQuestion();

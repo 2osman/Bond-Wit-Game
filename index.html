@@ -1,38 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bond Wit Game</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bond Wit Game</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bond Wit Game</h1>
-        <p>Think you can match Bond's wit? Let's see!</p>
-    </header>
-
-    <section class="game">
-        <div class="prompt">
-            <p id="gamePrompt">"You're not like the others, are you?"</p>
-        </div>
-
-        <div class="response-box">
-            <label for="userResponse">Your Response:</label>
-            <textarea id="userResponse" rows="4" placeholder="Write your Bond-like response..."></textarea>
-        </div>
-
-        <button id="submitResponse">Submit Response</button>
-
-        <div id="scoreBox" class="score-box">
-            <h3>Your Score: <span id="score">-</span>/10</h3>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Bond Wit Game. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <div id="game-container">
+    <div id="question"></div>
+    <div id="answers"></div>
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 </html>

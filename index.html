@@ -7,32 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Bond Wit Game</h1>
-            <p>Respond like James Bond and get a score!</p>
-        </header>
-
-        <div class="game">
-            <div id="sentence-container">
-                <p id="sentence">Click "Next" for a sentence.</p>
-            </div>
-
-            <textarea id="user-response" placeholder="Your witty response here..." rows="4" cols="50"></textarea>
-
-            <button id="next-button" onclick="generateSentence()">Next</button>
-            <button id="submit-button" onclick="submitResponse()">Submit Response</button>
-
-            <div id="score-container" style="display:none;">
-                <p>Your score: <span id="score"></span> out of 10</p>
-            </div>
+    <div class="game-container">
+        <h1>Bond Wit Game</h1>
+        <div id="question-container">
+            <!-- The question will appear here -->
         </div>
-
-        <footer>
-            <p>Created by Osman Hashim | Inspired by James Bond</p>
-        </footer>
+        <textarea id="user-answer" placeholder="Reply like Bond..."></textarea>
+        <button id="submit-answer">Submit Answer</button>
+        <div id="score-container">
+            <p>Score: <span id="score">0</span>/10</p>
+        </div>
     </div>
 
-    <script src="game.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-// Array of questions based on Bond's witty responses
+// Array of questions for the game
 const questions = [
     "Vesper: I'm the money. How will you respond?",
     "Bond: Only if one assumes that the person with the best hand always wins. How do you respond?",
@@ -6,9 +6,8 @@ const questions = [
     "Bond: Skewered. One sympathizes. What's your comeback?"
 ];
 
-// Initializing the game variables
 let currentQuestionIndex = 0;
-let score = 0; // Initialize score
+let score = 0;
 
 // Function to display the current question
 function displayQuestion() {
@@ -21,30 +20,30 @@ function submitAnswer() {
     const userAnswer = document.getElementById('user-answer').value;
     const scoreElement = document.getElementById('score');
 
-    // Example simple scoring logic: if the answer includes the word "Bond", score 10
+    // Simple scoring logic: if the answer contains "Bond", score 10
     if (userAnswer.toLowerCase().includes("bond")) {
-        score += 10; // Increase score by 10 if "Bond" is in the answer
+        score += 10; // Increase score if "Bond" is mentioned
     }
 
-    // Update the score on the page
+    // Update the score
     scoreElement.textContent = score;
 
-    // Clear the previous answer
+    // Clear the previous answer field
     document.getElementById('user-answer').value = '';
 
-    // Move to next question (if available)
+    // Move to the next question (if available)
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        displayQuestion(); // Show the next question
+        displayQuestion(); // Display the next question
     } else {
-        alert("Game Over! You completed all questions.");
+        alert("Game Over! You've completed all the questions.");
     }
 }
 
-// Set up event listeners
+// Set up the event listener for the submit button
 document.getElementById('submit-answer').addEventListener('click', submitAnswer);
 
-// Initialize the game by displaying the first question when the page loads
+// Initialize the game by displaying the first question
 window.onload = function() {
     displayQuestion();
 };

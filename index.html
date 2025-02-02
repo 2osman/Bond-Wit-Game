@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="game-container">
         <h1>Bond Wit Game</h1>
-        <div id="question-container"></div>
-        <textarea id="user-answer" placeholder="Type your witty response here..."></textarea>
-        <button id="submit-answer">Submit Answer</button>
-        <p>Your Score: <span id="score">0</span></p>
+        <div class="question-container">
+            <p id="question">Click 'Next' for your Bond challenge.</p>
+        </div>
+        <div class="input-container">
+            <textarea id="user-response" placeholder="Your witty response..."></textarea>
+            <button onclick="evaluateResponse()">Submit</button>
+            <button onclick="loadNewQuote()">Next</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+        <div id="score" class="score"></div>
     </div>
 
     <script src="script.js"></script>

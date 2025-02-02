@@ -1,54 +1,87 @@
-const sentences = [
-    "I think you're overestimating yourself.",
-    "Looks like rain today.",
-    "You’re late.",
-    "That suit looks expensive.",
-    "Try not to get into trouble.",
-    "Do you always have to have the last word?",
-    "That’s an interesting theory.",
-    "You’re hard to read.",
-    "You always seem to be in the right place at the right time.",
-    "Is there anything you're not good at?",
-    "You're not like the others, are you?",
-    "I never trust people who smile too much."
+// Sample questions and answers for the Bond game
+const questions = [
+  {
+    question: "Being wet never seemed to bother you",
+    answerOptions: [
+      { text: "Just part of the job", score: 8 },
+      { text: "I prefer dry conditions", score: 4 },
+      { text: "I enjoy the thrill", score: 6 }
+    ]
+  },
+  {
+    question: "You must enjoy my presence to notice my absence",
+    answerOptions: [
+      { text: "Only when it counts", score: 7 },
+      { text: "Always, even when you're not around", score: 9 },
+      { text: "I have a lot of things on my mind", score: 5 }
+    ]
+  },
+  {
+    question: "You seem to be enjoying the view",
+    answerOptions: [
+      { text: "The view’s always better with you", score: 8 },
+      { text: "I enjoy all kinds of views", score: 6 },
+      { text: "Only the view of the mission", score: 7 }
+    ]
+  }
 ];
 
-function submitResponse() {
-    const userResponse = document.getElementById('userResponse').value;
-    if (userResponse === "") {
-        alert("Please enter a response.");
-        return;
-    }
+// Initialize variables
+let currentQuestionIndex = 0;
+let totalScore = 0;
 
-    // Evaluate the response (this is a simple example scoring system)
-    const score = scoreResponse(userResponse);
-    document.getElementById('score').innerHTML = `Your score: ${score}/10`;
+// Function to display the current question and answers
+function displayQuestion() {
+  // Get the current question object
+  const currentQuestion = questions[currentQuestionIndex];
+  
+  // Get the question and answer elements from the DOM
+  const questionElement = document.getElementById("question");
+  const answersElement = document.getElementById("answers");
+
+  // Set the question text
+  questionElement.textContent = currentQuestion.question;
+
+  // Clear previous answers
+  answersElement.innerHTML = "";
+
+  // Loop through answer options and create buttons
+  currentQuestion.answerOptions.forEach((answerOption, index) => {
+    const button = document.createElement("button");
+    button.textContent = answerOption.text;
+    button.onclick = () => handleAnswer(answerOption.score);
+    answersElement.appendChild(button);
+  });
 }
 
-function scoreResponse(response) {
-    // This is a placeholder scoring system.
-    // You can implement a more sophisticated scoring algorithm later.
-    const bondLikeResponses = [
-        "only when it counts",
-        "perhaps",
-        "you noticed",
-        "skewered",
-        "of course not"
-    ];
+// Function to handle the answer click
+function handleAnswer(score) {
+  // Update total score
+  totalScore += score;
 
-    let score = 0;
-    bondLikeResponses.forEach(reply => {
-        if (response.toLowerCase().includes(reply)) {
-            score++;
-        }
-    });
+  // Log the score for debugging (optional)
+  console.log("Current Score:", totalScore);
 
-    return score; // Simple score based on matching Bond-like phrases
+  // Move to the next question
+  currentQuestionIndex++;
+
+  // If there are more questions, display the next one
+  if (currentQuestionIndex < questions.length) {
+    displayQuestion();
+  } else {
+    // End of game, show total score
+    showResult();
+  }
 }
 
-function generateNewSentence() {
-    const randomIndex = Math.floor(Math.random() * sentences.length);
-    document.getElementById('sentence').innerHTML = `<p><strong>Sentence:</strong> ${sentences[randomIndex]}</p>`;
-    document.getElementById('userResponse').value = ""; // Clear previous response
-    document.getElementById('score').innerHTML = ""; // Clear score
+// Function to show the final result
+function showResult() {
+  const questionElement = document.getElementById("question");
+  const answersElement = document.getElementById("answers");
+
+  questionElement.textContent = "Game Over!";
+  answersElement.innerHTML = `Your final score is: ${totalScore}`;
 }
+
+// Start the game by displaying the first question
+displayQuestion();

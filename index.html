@@ -1,26 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bond Wit Game</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="game-container">
-        <h1>Bond Wit Game</h1>
-        <div class="question-container">
-            <p id="question">Click 'Next' for your Bond challenge.</p>
-        </div>
-        <div class="input-container">
-            <textarea id="user-response" placeholder="Your witty response..."></textarea>
-            <button onclick="evaluateResponse()">Submit</button>
-            <button onclick="loadNewQuote()">Next</button>
-        </div>
-        <div id="feedback" class="feedback"></div>
-        <div id="score" class="score"></div>
-    </div>
+import React, { useState } from "react";
+import { Button, Input, Card, CardContent } from "@/components/ui";
+import { motion } from "framer-motion";
 
-    <script src="script.js"></script>
-</body>
-</html>
+const bondQuestions = [
+  "I'm the money.",
+  "Which do you prefer, blonde or brunette?",
+  "What else can you surmise about me?",
+  "How was your lamb?",
+];
+
+export default function BondWitGame() {
+  const [question, setQuestion] = useState(
+    bondQuestions[Math.floor(Math.random() * bondQuestions.length)]
+  );
+  const [userResponse, setUserResponse] = useState("");
+  const [feedback, setFeedback] = useState(null);
+  const [score, setScore] = useState(null);
+
+  const getBondRating = async () => {
+    const response = await fetch("http://localhost:5000/rate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reply: userResponse, question }),
+    });
+    const data = await response.json();
+    setScore(data.score);
+    setFeedback(data.feedback);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="p-6 max-w-xl text-center shadow-lg rounded-2xl">
+          <h2 className="text-xl font-semibold mb-4">{question}</h2>
+          <Input
+            type="text"
+            value={userResponse}
+            onChange={(e) => setUserResponse(e.target.value)}
+            placeholder="Your witty response..."
+            className="w-full p-2 border rounded-lg"
+          />
+          <Button onClick={getBondRating} className="mt-4">Submit</Button>
+          {feedback && (
+            <div className="mt-4">
+              <p className="text-lg font-semibold">Score: {score}/10</p>
+              <p className="text-md text-gray-600">{feedback}</p>
+            </div>
+          )}
+        </Card>
+      </motion.div>
+    </div>
+  );
+}
